@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:fa="clr-namespace:UraniumUI.Icons.FontAwesome;assembly=UraniumUI.Icons.FontAwesome"
+             x:Class="LaurelLibrary.Views.AuthenticationPage"
+             Title="Authentication"
+             Shell.NavBarIsVisible="False">
+
+    <Grid RowDefinitions="Auto,*,Auto"
+          Padding="30"
+          RowSpacing="20">
+
+        <!-- Header -->
+        <VerticalStackLayout Grid.Row="0"
+                             Spacing="10"
+                             Margin="0,40,0,0">
+            <Label Text="Welcome to MyLibrarian"
+                   FontSize="32"
+                   FontAttributes="Bold"
+                   HorizontalOptions="Center"
+                   TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDarkText}}"/>
+
+            <Label Text="Please select your role to continue"
+                   FontSize="16"
+                   HorizontalOptions="Center"
+                   TextColor="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource Gray200}}"/>
+        </VerticalStackLayout>
+
+        <!-- Authentication Options -->
+        <VerticalStackLayout Grid.Row="1"
+                             Spacing="20"
+                             VerticalOptions="Center">
+
+            <!-- Reader Option -->
+            <Border Stroke="{StaticResource Primary}"
+                    StrokeThickness="2"
+                    BackgroundColor="{AppThemeBinding Light=White, Dark=#1E1E1E}"
+                    Padding="20"
+                    StrokeShape="RoundRectangle 15">
+                <Border.Shadow>
+                    <Shadow Brush="Black"
+                            Opacity="0.2"
+                            Radius="10"
+                            Offset="0,2"/>
+                </Border.Shadow>
+                <Grid RowDefinitions="Auto,Auto,Auto"
+                      RowSpacing="10">
+                    <Image>
+                        <Image.Source>
+                            <FontImageSource FontFamily="FASolid"
+                                             Glyph="{x:Static fa:Solid.User}"
+                                             Color="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDarkText}}"/>
+                        </Image.Source>
+                    </Image>
+
+                    <Label Grid.Row="1"
+                           Text="Reader"
+                           FontSize="24"
+                           FontAttributes="Bold"
+                           HorizontalOptions="Center"
+                           TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDarkText}}"/>
+
+                    <Label Grid.Row="2"
+                           Text="Browse and read books from the library"
+                           FontSize="14"
+                           HorizontalOptions="Center"
+                           HorizontalTextAlignment="Center"
+                           TextColor="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource Gray200}}"/>
+                </Grid>
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnReaderSelected"/>
+                </Border.GestureRecognizers>
+            </Border>
+
+            <!-- Administrator Option -->
+            <Border Stroke="{StaticResource Primary}"
+                    StrokeThickness="2"
+                    BackgroundColor="{AppThemeBinding Light=White, Dark=#1E1E1E}"
+                    Padding="20"
+                    StrokeShape="RoundRectangle 15">
+                <Border.Shadow>
+                    <Shadow Brush="Black"
+                            Opacity="0.2"
+                            Radius="10"
+                            Offset="0,2"/>
+                </Border.Shadow>
+                <Grid RowDefinitions="Auto,Auto,Auto"
+                      RowSpacing="10">
+                    <Image>
+                        <Image.Source>
+                            <FontImageSource FontFamily="FASolid"
+                                             Glyph="{x:Static fa:Solid.UserShield}"
+                                             Color="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDarkText}}"/>
+                        </Image.Source>
+                    </Image>
+                    <Label Grid.Row="1"
+                           Text="Administrator"
+                           FontSize="24"
+                           FontAttributes="Bold"
+                           HorizontalOptions="Center"
+                           TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDarkText}}"/>
+
+                    <Label Grid.Row="2"
+                           Text="Manage library books and users"
+                           FontSize="14"
+                           HorizontalOptions="Center"
+                           HorizontalTextAlignment="Center"
+                           TextColor="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource Gray200}}"/>
+                </Grid>
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnAdministratorSelected"/>
+                </Border.GestureRecognizers>
+            </Border>
+
+        </VerticalStackLayout>
+
+        <!-- Footer -->
+        <Label Grid.Row="2"
+               Text="Tap an option to continue"
+               FontSize="12"
+               HorizontalOptions="Center"
+               TextColor="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource Gray200}}"/>
+
+    </Grid>
+
+</ContentPage>

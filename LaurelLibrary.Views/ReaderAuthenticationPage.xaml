@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:fa="clr-namespace:UraniumUI.Icons.FontAwesome;assembly=UraniumUI.Icons.FontAwesome"
+             xmlns:viewmodels="clr-namespace:LaurelLibrary.Core.ViewModels;assembly=LaurelLibrary.Core"
+             x:Class="LaurelLibrary.Views.ReaderAuthenticationPage"
+             Title="Reader Authentication"
+             x:DataType="viewmodels:ReaderAuthenticationViewModel">
+
+    <Grid RowDefinitions="Auto,*"
+          Padding="30"
+          RowSpacing="20">
+
+        <!-- Header -->
+        <VerticalStackLayout Grid.Row="0"
+                             Spacing="10"
+                             Margin="0,20,0,0">
+            <Label Text="Reader Authentication"
+                   FontSize="28"
+                   FontAttributes="Bold"
+                   HorizontalOptions="Center"
+                   TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDarkText}}"/>
+
+            <Label Text="Find your library and enter your email"
+                   FontSize="14"
+                   HorizontalOptions="Center"
+                   TextColor="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource Gray200}}"/>
+        </VerticalStackLayout>
+
+        <!-- Content -->
+        <ScrollView Grid.Row="1">
+            <VerticalStackLayout Spacing="20"
+                                 VerticalOptions="Start"
+                                 Margin="0,20,0,0">
+
+                <!-- Library Search Section -->
+                <Border Stroke="{StaticResource Primary}"
+                        StrokeThickness="1"
+                        BackgroundColor="{AppThemeBinding Light=White, Dark=#1E1E1E}"
+                        Padding="20"
+                        StrokeShape="RoundRectangle 10">
+                    <VerticalStackLayout Spacing="15">
+                        <Label Text="1. Find Your Library"
+                               FontSize="18"
+                               FontAttributes="Bold"
+                               TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDarkText}}"/>
+
+                        <Entry Placeholder="Search for library..."
+                               Text="{Binding LibrarySearchQuery}"
+                               ReturnCommand="{Binding SearchLibrariesCommand}"
+                               ReturnType="Search"/>
+
+                        <Button Text="Search Libraries"
+                                Command="{Binding SearchLibrariesCommand}"
+                                HorizontalOptions="Fill"
+                                IsEnabled="{Binding IsNotBusy}"/>
+
+                        <!-- Library Search Results -->
+                        <CollectionView ItemsSource="{Binding Libraries}"
+                                        SelectionMode="Single"
+                                        SelectedItem="{Binding SelectedLibrary}"
+                                        IsVisible="{Binding HasLibraries}"
+                                        MaximumHeightRequest="300">
+                            <CollectionView.ItemTemplate>
+                                <DataTemplate>
+                                    <Border Stroke="{StaticResource Gray200}"
+                                            StrokeThickness="1"
+                                            Padding="15"
+                                            Margin="0,5"
+                                            StrokeShape="RoundRectangle 8">
+                                        <VerticalStackLayout Spacing="5">
+                                            <Label Text="{Binding Name}"
+                                                   FontSize="16"
+                                                   FontAttributes="Bold"/>
+                                            <Label Text="{Binding Address}"
+                                                   FontSize="12"
+                                                   TextColor="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource Gray200}}"/>
+                                        </VerticalStackLayout>
+                                    </Border>
+                                </DataTemplate>
+                            </CollectionView.ItemTemplate>
+                        </CollectionView>
+
+                        <!-- Selected Library Display -->
+                        <Border Stroke="{StaticResource Primary}"
+                                StrokeThickness="2"
+                                Padding="15"
+                                StrokeShape="RoundRectangle 8"
+                                IsVisible="{Binding HasSelectedLibrary}"
+                                BackgroundColor="{AppThemeBinding Light={StaticResource Gray100}, Dark={StaticResource Gray900}}">
+                            <VerticalStackLayout Spacing="5">
+                                <Label Text="Selected Library:"
+                                       FontSize="12"
+                                       TextColor="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource Gray200}}"/>
+                                <Label Text="{Binding SelectedLibrary.Name}"
+                                       FontSize="16"
+                                       FontAttributes="Bold"
+                                       TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDarkText}}"/>
+                                <Label Text="{Binding SelectedLibrary.Address}"
+                                       FontSize="12"
+                                       TextColor="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource Gray200}}"/>
+                            </VerticalStackLayout>
+                        </Border>
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- Email Entry Section -->
+                <Border Stroke="{StaticResource Primary}"
+                        StrokeThickness="1"
+                        BackgroundColor="{AppThemeBinding Light=White, Dark=#1E1E1E}"
+                        Padding="20"
+                        StrokeShape="RoundRectangle 10"
+                        IsEnabled="{Binding HasSelectedLibrary}">
+                    <VerticalStackLayout Spacing="15">
+                        <Label Text="2. Enter Your Email"
+                               FontSize="18"
+                               FontAttributes="Bold"
+                               TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDarkText}}"/>
+
+                        <Entry Placeholder="your.email@example.com"
+                               Text="{Binding Email}"
+                               Keyboard="Email"
+                               ReturnCommand="{Binding AuthenticateCommand}"
+                               ReturnType="Done"/>
+
+                        <Button Text="Authenticate"
+                                Command="{Binding AuthenticateCommand}"
+                                HorizontalOptions="Fill"
+                                IsEnabled="{Binding CanAuthenticate}"/>
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- Error Message -->
+                <Label Text="{Binding ErrorMessage}"
+                       IsVisible="{Binding HasError}"
+                       TextColor="Red"
+                       FontSize="14"
+                       HorizontalOptions="Center"
+                       HorizontalTextAlignment="Center"/>
+
+                <!-- Loading Indicator -->
+                <ActivityIndicator IsRunning="{Binding IsBusy}"
+                                   IsVisible="{Binding IsBusy}"
+                                   Color="{StaticResource Primary}"
+                                   HorizontalOptions="Center"/>
+
+                <!-- Back Button -->
+                <Button Text="← Back to Role Selection"
+                        Command="{Binding GoBackCommand}"
+                        HorizontalOptions="Center"
+                        BackgroundColor="Transparent"
+                        TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDarkText}}"
+                        Margin="0,20,0,0"/>
+
+            </VerticalStackLayout>
+        </ScrollView>
+
+    </Grid>
+
+</ContentPage>

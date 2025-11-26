@@ -1,0 +1,62 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LaurelLibrary.Views", "LaurelLibrary.Views\LaurelLibrary.Views.csproj", "{50030688-EE5B-4176-83B0-D9F230AB1630}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LaurelLibrary.Core", "LaurelLibrary.Core\LaurelLibrary.Core.csproj", "{E5EE6654-BC68-4AEB-A417-7BE500683C7B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LaurelLibrary.ApiClient", "..\LaurelLibrary\LaurelLibrary.ApiClient\LaurelLibrary.ApiClient.csproj", "{00310A49-8C8D-437E-B6DD-D6498E5C555C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|Any CPU = Release|Any CPU
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{50030688-EE5B-4176-83B0-D9F230AB1630}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{50030688-EE5B-4176-83B0-D9F230AB1630}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{50030688-EE5B-4176-83B0-D9F230AB1630}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{50030688-EE5B-4176-83B0-D9F230AB1630}.Debug|x64.Build.0 = Debug|Any CPU
+		{50030688-EE5B-4176-83B0-D9F230AB1630}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{50030688-EE5B-4176-83B0-D9F230AB1630}.Debug|x86.Build.0 = Debug|Any CPU
+		{50030688-EE5B-4176-83B0-D9F230AB1630}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{50030688-EE5B-4176-83B0-D9F230AB1630}.Release|Any CPU.Build.0 = Release|Any CPU
+		{50030688-EE5B-4176-83B0-D9F230AB1630}.Release|x64.ActiveCfg = Release|Any CPU
+		{50030688-EE5B-4176-83B0-D9F230AB1630}.Release|x64.Build.0 = Release|Any CPU
+		{50030688-EE5B-4176-83B0-D9F230AB1630}.Release|x86.ActiveCfg = Release|Any CPU
+		{50030688-EE5B-4176-83B0-D9F230AB1630}.Release|x86.Build.0 = Release|Any CPU
+		{E5EE6654-BC68-4AEB-A417-7BE500683C7B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E5EE6654-BC68-4AEB-A417-7BE500683C7B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E5EE6654-BC68-4AEB-A417-7BE500683C7B}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{E5EE6654-BC68-4AEB-A417-7BE500683C7B}.Debug|x64.Build.0 = Debug|Any CPU
+		{E5EE6654-BC68-4AEB-A417-7BE500683C7B}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{E5EE6654-BC68-4AEB-A417-7BE500683C7B}.Debug|x86.Build.0 = Debug|Any CPU
+		{E5EE6654-BC68-4AEB-A417-7BE500683C7B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E5EE6654-BC68-4AEB-A417-7BE500683C7B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E5EE6654-BC68-4AEB-A417-7BE500683C7B}.Release|x64.ActiveCfg = Release|Any CPU
+		{E5EE6654-BC68-4AEB-A417-7BE500683C7B}.Release|x64.Build.0 = Release|Any CPU
+		{E5EE6654-BC68-4AEB-A417-7BE500683C7B}.Release|x86.ActiveCfg = Release|Any CPU
+		{E5EE6654-BC68-4AEB-A417-7BE500683C7B}.Release|x86.Build.0 = Release|Any CPU
+		{00310A49-8C8D-437E-B6DD-D6498E5C555C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{00310A49-8C8D-437E-B6DD-D6498E5C555C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{00310A49-8C8D-437E-B6DD-D6498E5C555C}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{00310A49-8C8D-437E-B6DD-D6498E5C555C}.Debug|x64.Build.0 = Debug|Any CPU
+		{00310A49-8C8D-437E-B6DD-D6498E5C555C}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{00310A49-8C8D-437E-B6DD-D6498E5C555C}.Debug|x86.Build.0 = Debug|Any CPU
+		{00310A49-8C8D-437E-B6DD-D6498E5C555C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{00310A49-8C8D-437E-B6DD-D6498E5C555C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{00310A49-8C8D-437E-B6DD-D6498E5C555C}.Release|x64.ActiveCfg = Release|Any CPU
+		{00310A49-8C8D-437E-B6DD-D6498E5C555C}.Release|x64.Build.0 = Release|Any CPU
+		{00310A49-8C8D-437E-B6DD-D6498E5C555C}.Release|x86.ActiveCfg = Release|Any CPU
+		{00310A49-8C8D-437E-B6DD-D6498E5C555C}.Release|x86.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
