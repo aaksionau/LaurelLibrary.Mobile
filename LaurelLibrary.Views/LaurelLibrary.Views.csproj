@@ -56,4 +56,10 @@
 	  <ProjectReference Include="../LaurelLibrary.Core/LaurelLibrary.Core.csproj" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <MauiXaml Update="LibrarySearchPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	</ItemGroup>
+
 </Project>

@@ -55,32 +55,6 @@
                                 HorizontalOptions="Fill"
                                 IsEnabled="{Binding IsNotBusy}"/>
 
-                        <!-- Library Search Results -->
-                        <CollectionView ItemsSource="{Binding Libraries}"
-                                        SelectionMode="Single"
-                                        SelectedItem="{Binding SelectedLibrary}"
-                                        IsVisible="{Binding HasLibraries}"
-                                        MaximumHeightRequest="300">
-                            <CollectionView.ItemTemplate>
-                                <DataTemplate>
-                                    <Border Stroke="{StaticResource Gray200}"
-                                            StrokeThickness="1"
-                                            Padding="15"
-                                            Margin="0,5"
-                                            StrokeShape="RoundRectangle 8">
-                                        <VerticalStackLayout Spacing="5">
-                                            <Label Text="{Binding Name}"
-                                                   FontSize="16"
-                                                   FontAttributes="Bold"/>
-                                            <Label Text="{Binding Address}"
-                                                   FontSize="12"
-                                                   TextColor="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource Gray200}}"/>
-                                        </VerticalStackLayout>
-                                    </Border>
-                                </DataTemplate>
-                            </CollectionView.ItemTemplate>
-                        </CollectionView>
-
                         <!-- Selected Library Display -->
                         <Border Stroke="{StaticResource Primary}"
                                 StrokeThickness="2"
@@ -88,18 +62,31 @@
                                 StrokeShape="RoundRectangle 8"
                                 IsVisible="{Binding HasSelectedLibrary}"
                                 BackgroundColor="{AppThemeBinding Light={StaticResource Gray100}, Dark={StaticResource Gray900}}">
-                            <VerticalStackLayout Spacing="5">
-                                <Label Text="Selected Library:"
-                                       FontSize="12"
-                                       TextColor="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource Gray200}}"/>
-                                <Label Text="{Binding SelectedLibrary.Name}"
-                                       FontSize="16"
-                                       FontAttributes="Bold"
-                                       TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDarkText}}"/>
-                                <Label Text="{Binding SelectedLibrary.Address}"
-                                       FontSize="12"
-                                       TextColor="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource Gray200}}"/>
-                            </VerticalStackLayout>
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition/>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="100"/>
+                                    <ColumnDefinition Width="auto"/>
+                                </Grid.ColumnDefinitions>
+                                <Image>
+                                    <Image.Source>
+                                        <FontImageSource FontFamily="FASolid"
+                                             Glyph="{x:Static fa:Solid.Check}"
+                                             Color="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDarkText}}"/>
+                                    </Image.Source>
+                                </Image>
+                                <VerticalStackLayout Grid.Column="1">
+                                    <Label Text="{Binding SelectedLibrary.Name}"
+                                            FontSize="16"
+                                            FontAttributes="Bold"
+                                            TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDarkText}}"/>
+                                    <Label Text="{Binding SelectedLibrary.Address}"
+                                        FontSize="12"
+                                        TextColor="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource Gray200}}"/>
+                                </VerticalStackLayout>
+                            </Grid>
                         </Border>
                     </VerticalStackLayout>
                 </Border>

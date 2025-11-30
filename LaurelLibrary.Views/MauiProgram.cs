@@ -53,9 +53,11 @@ public static class MauiProgram
 
 		// Register ViewModels
 		builder.Services.AddTransient<ReaderAuthenticationViewModel>();
+		builder.Services.AddTransient<LibrarySearchPageViewModel>();
 
 		// Register Pages
 		builder.Services.AddTransient<ReaderAuthenticationPage>();
+		builder.Services.AddTransient<LibrarySearchPage>();
 
 #if DEBUG
 		builder.Logging.AddDebug();

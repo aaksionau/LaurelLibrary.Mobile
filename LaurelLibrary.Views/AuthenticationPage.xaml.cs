@@ -10,7 +10,7 @@ public partial class AuthenticationPage : ContentPage
     private async void OnReaderSelected(object sender, EventArgs e)
     {
         // Navigate to reader authentication page
-        await Shell.Current.GoToAsync("//ReaderAuthenticationPage");
+        await Shell.Current.GoToAsync("//readerAuthenticationPage");
     }
 
     private async void OnAdministratorSelected(object sender, EventArgs e)
@@ -20,6 +20,6 @@ public partial class AuthenticationPage : ContentPage
         Preferences.Set("UserRole", "Administrator");
 
         // Navigate to main page
-        await Shell.Current.GoToAsync("//MainPage");
+        await Shell.Current.GoToAsync("//mainPage");
     }
 }

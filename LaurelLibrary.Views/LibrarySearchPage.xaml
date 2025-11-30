@@ -1,0 +1,93 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodels="clr-namespace:LaurelLibrary.Core.ViewModels;assembly=LaurelLibrary.Core"
+             x:Class="LaurelLibrary.Views.LibrarySearchPage"
+             Title="Select Library"
+             x:Name="SearchPage"
+             x:DataType="viewmodels:LibrarySearchPageViewModel">
+
+    <StackLayout>
+        <!-- Search Results -->
+        <CollectionView ItemsSource="{Binding Libraries}"
+                        SelectionMode="Single"
+                        IsVisible="{Binding IsNotBusy}">
+            <CollectionView.Header>
+                <!-- Header -->
+                <VerticalStackLayout Spacing="8">
+                    <Label Text="Select Your Library"
+                   FontSize="28"
+                   FontAttributes="Bold"
+                   HorizontalOptions="Center"
+                   TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDarkText}}"/>
+                    <Label Text="Choose your library from the search results"
+                   FontSize="14"
+                   HorizontalOptions="Center"
+                   TextColor="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource Gray200}}"/>
+                </VerticalStackLayout>
+            </CollectionView.Header>
+            <CollectionView.EmptyView>
+                <StackLayout Padding="16" Margin="0,200" Spacing="8">
+                    <Label Text="No libraries found"
+                           FontSize="16"
+                           FontAttributes="Bold"
+                           HorizontalOptions="Center"
+                           TextColor="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource Gray200}}"/>
+                    <Label Text="{Binding ErrorMessage}"
+                           FontSize="12"
+                           HorizontalOptions="Center"
+                           TextColor="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource Gray200}}"
+                           IsVisible="{Binding HasError}"/>
+                    <Label Text="Please go back and search again"
+                           FontSize="12"
+                           HorizontalOptions="Center"
+                           TextColor="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource Gray200}}"/>
+                </StackLayout>
+            </CollectionView.EmptyView>
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Border Stroke="{StaticResource Primary}"
+                            StrokeThickness="1"
+                            Padding="16"
+                            Margin="20,8"
+                            StrokeShape="RoundRectangle 8"
+                            BackgroundColor="{AppThemeBinding Light=White, Dark=#1E1E1E}">
+                        <Grid ColumnDefinitions="*,Auto" ColumnSpacing="12">
+                            <VerticalStackLayout Grid.Column="0" Spacing="6">
+                                <Label Text="{Binding Name}"
+                                       FontSize="16"
+                                       FontAttributes="Bold"
+                                       TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDarkText}}"/>
+                                <Label Text="{Binding Address}"
+                                       FontSize="12"
+                                       TextColor="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource Gray200}}"/>
+                            </VerticalStackLayout>
+                            <Button Grid.Column="1"
+                                    Text="Select"
+                                    Command="{Binding BindingContext.SelectLibraryCommand, Source={RelativeSource AncestorType={x:Type ContentPage}}}"
+                                    CommandParameter="{Binding BindingContext, Source={RelativeSource AncestorType={x:Type Grid}}}"
+                                    VerticalOptions="Center"
+                                    Padding="12,8"
+                                    FontSize="12"/>
+                        </Grid>
+                    </Border>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <ActivityIndicator IsRunning="{Binding IsBusy}"
+                               IsVisible="{Binding IsBusy}"
+                               Color="{StaticResource Primary}"
+                               HorizontalOptions="Center"/>
+
+        <!-- Footer Buttons -->
+        <Button
+                Text="← Back to Authentication"
+                Command="{Binding GoBackCommand}"
+                HorizontalOptions="Center"
+                BackgroundColor="Transparent"
+                TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDarkText}}"
+                FontSize="13"/>
+
+    </StackLayout>
+</ContentPage>

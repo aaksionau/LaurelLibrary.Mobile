@@ -2,7 +2,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using LaurelLibrary.Core.Models;
 using LaurelLibrary.Core.Services;
-using System.Collections.ObjectModel;
+using System.Collections.Generic;
 
 namespace LaurelLibrary.Core.ViewModels;
 
@@ -26,11 +26,7 @@ public partial class ReaderAuthenticationViewModel : ObservableObject
     [ObservableProperty]
     private string _errorMessage = string.Empty;
 
-    [ObservableProperty]
-    private ObservableCollection<LibraryDto> _libraries = new();
-
     public bool IsNotBusy => !IsBusy;
-    public bool HasLibraries => Libraries.Count > 0;
     public bool HasSelectedLibrary => SelectedLibrary != null;
     public bool HasError => !string.IsNullOrEmpty(ErrorMessage);
     public bool CanAuthenticate => HasSelectedLibrary && !string.IsNullOrWhiteSpace(Email) && !IsBusy;
@@ -61,11 +57,6 @@ public partial class ReaderAuthenticationViewModel : ObservableObject
         OnPropertyChanged(nameof(CanAuthenticate));
     }
 
-    partial void OnLibrariesChanged(ObservableCollection<LibraryDto> value)
-    {
-        OnPropertyChanged(nameof(HasLibraries));
-    }
-
     partial void OnErrorMessageChanged(string value)
     {
         OnPropertyChanged(nameof(HasError));
@@ -80,32 +71,7 @@ public partial class ReaderAuthenticationViewModel : ObservableObject
             return;
         }
 
-        IsBusy = true;
-        ErrorMessage = string.Empty;
-
-        try
-        {
-            var results = await _libraryService.SearchLibrariesAsync(LibrarySearchQuery);
-            Libraries.Clear();
-            
-            foreach (var library in results)
-            {
-                Libraries.Add(library);
-            }
-
-            if (!HasLibraries)
-            {
-                ErrorMessage = "No libraries found matching your search";
-            }
-        }
-        catch (Exception ex)
-        {
-            ErrorMessage = $"Error searching libraries: {ex.Message}";
-        }
-        finally
-        {
-            IsBusy = false;
-        }
+        await Shell.Current.GoToAsync($"//librarySearchPage?query={Uri.EscapeDataString(LibrarySearchQuery)}");
     }
 
     [RelayCommand(CanExecute = nameof(CanAuthenticate))]
@@ -126,7 +92,7 @@ public partial class ReaderAuthenticationViewModel : ObservableObject
             if (success)
             {
                 // Navigate to main page
-                await Shell.Current.GoToAsync("//MainPage");
+                await Shell.Current.GoToAsync("//mainPage");
             }
             else
             {
@@ -146,6 +112,22 @@ public partial class ReaderAuthenticationViewModel : ObservableObject
     [RelayCommand]
     private async Task GoBack()
     {
-        await Shell.Current.GoToAsync("//AuthenticationPage");
+        await Shell.Current.GoToAsync("//authenticationPage");
+    }
+
+    public async Task ApplyQueryAttributes(IDictionary<string, object> query)
+    {
+        if (query != null && query.TryGetValue("selectedLibraryId", out var libraryId))
+        {
+            if (Guid.TryParse(libraryId.ToString(), out var id))
+            {
+                var libraryName = query.TryGetValue("selectedLibraryName", out var name) ? Uri.UnescapeDataString(name.ToString() ?? "") : "";
+                var libraryAddress = query.TryGetValue("selectedLibraryAddress", out var address) ? Uri.UnescapeDataString(address.ToString() ?? "") : "";
+
+                // Create a library object from the parameters
+                SelectedLibrary = new LibraryDto { Id = id, Name = libraryName, Address = libraryAddress };
+                ErrorMessage = string.Empty;
+            }
+        }
     }
 }

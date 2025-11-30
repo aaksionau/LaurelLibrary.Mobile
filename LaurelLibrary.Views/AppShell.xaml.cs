@@ -9,11 +9,11 @@ public partial class AppShell : Shell
 		// Navigate to authentication page if no user role is set
 		if (!Preferences.ContainsKey("UserRole"))
 		{
-			Loaded += async (s, e) => await GoToAsync("//AuthenticationPage");
+			Loaded += async (s, e) => await GoToAsync("//authenticationPage");
 		}
 		else
 		{
-			Loaded += async (s, e) => await GoToAsync("//MainPage");
+			Loaded += async (s, e) => await GoToAsync("//mainPage");
 		}
 	}
 }

@@ -9,16 +9,21 @@
     <ShellContent
         Title="Authentication"
         ContentTemplate="{DataTemplate local:AuthenticationPage}"
-        Route="AuthenticationPage"/>
+        Route="authenticationPage"/>
 
     <ShellContent
         Title="Reader Authentication"
         ContentTemplate="{DataTemplate local:ReaderAuthenticationPage}"
-        Route="ReaderAuthenticationPage"/>
+        Route="readerAuthenticationPage"/>
+
+    <ShellContent
+        Title="Select Library"
+        ContentTemplate="{DataTemplate local:LibrarySearchPage}"
+        Route="librarySearchPage"/>
 
     <ShellContent
         Title="Home"
         ContentTemplate="{DataTemplate local:MainPage}"
-        Route="MainPage"/>
+        Route="mainPage"/>
 
 </Shell>
