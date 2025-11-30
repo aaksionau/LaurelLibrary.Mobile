@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:fa="clr-namespace:UraniumUI.Icons.FontAwesome;assembly=UraniumUI.Icons.FontAwesome"
+			 xmlns:models="clr-namespace:LaurelLibrary.Core.Models;assembly=LaurelLibrary.Core"
+             xmlns:viewmodels="clr-namespace:LaurelLibrary.Core.ViewModels;assembly=LaurelLibrary.Core"
+             x:Class="LaurelLibrary.Views.BorrowedBooksPage"
+             Title="Borrowed Books"
+             x:DataType="viewmodels:BorrowedBooksViewModel">
+
+	<Grid RowDefinitions="*" ColumnDefinitions="*">
+		<!-- Loading State -->
+		<StackLayout Grid.Row="0" Grid.Column="0"
+					 Padding="20"
+					 VerticalOptions="Center"
+					 HorizontalOptions="Center"
+					 IsVisible="{Binding IsBusy}"
+					 Spacing="15">
+			<ActivityIndicator IsRunning="{Binding IsBusy}"
+							   IsVisible="{Binding IsBusy}"
+							   Scale="1.5"/>
+			<Label Text="Loading your books..."
+				   FontSize="16"
+				   HorizontalTextAlignment="Center"
+				   TextColor="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource Gray200}}"/>
+		</StackLayout>
+
+		<!-- Error State -->
+		<StackLayout Grid.Row="0" Grid.Column="0"
+					 Padding="20"
+					 VerticalOptions="Center"
+					 HorizontalOptions="Center"
+					 IsVisible="{Binding HasError}"
+					 Spacing="12">
+			<Label Text="⚠️ Unable to Load Books"
+				   FontSize="18"
+				   FontAttributes="Bold"
+				   HorizontalTextAlignment="Center"
+				   TextColor="{StaticResource Danger}"/>
+			<Label Text="{Binding ErrorMessage}"
+				   FontSize="14"
+				   HorizontalTextAlignment="Center"
+				   TextColor="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource Gray200}}"
+				   LineBreakMode="WordWrap"/>
+		</StackLayout>
+
+		<!-- Empty State -->
+		<StackLayout Grid.Row="0" Grid.Column="0"
+					 Padding="20"
+					 VerticalOptions="Center"
+					 HorizontalOptions="Center"
+					 IsVisible="{Binding HasBorrowedBooks, Converter={StaticResource InvertedBoolConverter}}"
+					 Spacing="12">
+			<Label Text="📚 No Borrowed Books"
+				   FontSize="18"
+				   FontAttributes="Bold"
+				   HorizontalTextAlignment="Center"
+				   TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDarkText}}"/>
+			<Label Text="You haven't borrowed any books yet. Visit your library to explore our collection!"
+				   FontSize="14"
+				   HorizontalTextAlignment="Center"
+				   TextColor="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource Gray200}}"
+				   LineBreakMode="WordWrap"/>
+		</StackLayout>
+
+		<!-- Content State -->
+		<RefreshView Grid.Row="0" Grid.Column="0"
+					 IsVisible="{Binding HasBorrowedBooks}">
+			<ScrollView>
+				<StackLayout Padding="15" Spacing="0">
+					<!-- Header with Reader Greeting -->
+					<StackLayout Padding="0,0,0,20" Spacing="8">
+						<Label Text="{Binding ReaderName, StringFormat='Welcome, {0}!'}"
+							   FontSize="24"
+							   FontAttributes="Bold"
+							   TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDarkText}}"/>
+						<Label Text="{Binding BorrowedBooks.Count, StringFormat='{0} book(s) borrowed'}"
+							   FontSize="14"
+							   TextColor="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource Gray200}}"/>
+					</StackLayout>
+
+					<!-- Books List -->
+					<CollectionView ItemsSource="{Binding BorrowedBooks}"
+									SelectionMode="None">
+						<CollectionView.ItemsLayout>
+							<LinearItemsLayout Orientation="Vertical"
+												ItemSpacing="12"/>
+						</CollectionView.ItemsLayout>
+						<CollectionView.ItemTemplate>
+							<DataTemplate x:DataType="models:BorrowedBookDto">
+								<Border Stroke="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource Gray500}}"
+										StrokeThickness="1"
+										BackgroundColor="{AppThemeBinding Light=White, Dark=#1E1E1E}"
+										Padding="15"
+										StrokeShape="RoundRectangle 12"
+										Margin="0">
+									<StackLayout Spacing="10">
+										<!-- Title Row with Status Badge -->
+										<Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto" ColumnSpacing="10">
+											<Label Grid.Column="0"
+												   Text="{Binding Title}"
+												   FontSize="16"
+												   FontAttributes="Bold"
+												   VerticalOptions="Center"
+												   TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDarkText}}"
+												   LineBreakMode="TailTruncation"/>
+											
+											<!-- Status Badge -->
+											<Frame Grid.Column="1"
+												   Padding="10,6"
+												   CornerRadius="16"
+												   BorderColor="Transparent"
+												   HasShadow="False"
+												   BackgroundColor="{AppThemeBinding Light={StaticResource Warning}, Dark={StaticResource Warning}}"
+												   VerticalOptions="Center">
+												<Label Text="{Binding DueStatus}"
+													   FontSize="11"
+													   FontAttributes="Bold"
+													   TextColor="White"
+													   HorizontalTextAlignment="Center"
+													   Margin="0"/>
+											</Frame>
+										</Grid>
+
+										<!-- Metadata Row 1: Author -->
+										<StackLayout IsVisible="{Binding Author, Converter={StaticResource IsNotNullConverter}}"
+													 Spacing="4"
+													 Orientation="Horizontal">
+											<Label Text="✍️"
+												   FontSize="12"
+												   VerticalOptions="Center"/>
+											<Label Text="{Binding Author}"
+												   FontSize="13"
+												   TextColor="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource Gray200}}"
+												   VerticalOptions="Center"/>
+										</StackLayout>
+
+										<!-- Metadata Row 2: ISBN -->
+										<StackLayout IsVisible="{Binding Isbn, Converter={StaticResource IsNotNullConverter}}"
+													 Spacing="4"
+													 Orientation="Horizontal">
+											<Label Text="📖"
+												   FontSize="12"
+												   VerticalOptions="Center"/>
+											<Label Text="{Binding Isbn}"
+												   FontSize="12"
+												   TextColor="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource Gray200}}"
+												   VerticalOptions="Center"
+												   FontFamily="Courier"/>
+										</StackLayout>
+
+										<!-- Dates Row: Borrowed and Due -->
+										<Grid ColumnDefinitions="*,*" RowDefinitions="Auto" ColumnSpacing="8">
+											<!-- Borrowed Date -->
+											<StackLayout Grid.Column="0"
+														 IsVisible="{Binding BorrowedDate}"
+														 Spacing="4"
+														 Orientation="Vertical">
+												<Label Text="Borrowed"
+													   FontSize="11"
+													   TextColor="{AppThemeBinding Light={StaticResource Gray500}, Dark={StaticResource Gray300}}"/>
+												<Label Text="{Binding BorrowedDate, StringFormat='{0:MMM dd, yyyy}'}"
+													   FontSize="12"
+													   TextColor="{AppThemeBinding Light={StaticResource TextPrimary}, Dark={StaticResource White}}"/>
+											</StackLayout>
+
+											<!-- Due Date -->
+											<StackLayout Grid.Column="1"
+														 IsVisible="{Binding DueDate}"
+														 Spacing="4"
+														 Orientation="Vertical">
+												<Label Text="Due Date"
+													   FontSize="11"
+													   TextColor="{AppThemeBinding Light={StaticResource Gray500}, Dark={StaticResource Gray300}}"/>
+												<Label Text="{Binding DueDate, StringFormat='{0:MMM dd, yyyy}'}"
+													   FontSize="12"
+													   FontAttributes="Bold"
+													   TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDarkText}}"/>
+											</StackLayout>
+										</Grid>
+									</StackLayout>
+								</Border>
+							</DataTemplate>
+						</CollectionView.ItemTemplate>
+					</CollectionView>
+				</StackLayout>
+			</ScrollView>
+		</RefreshView>
+	</Grid>
+
+</ContentPage>

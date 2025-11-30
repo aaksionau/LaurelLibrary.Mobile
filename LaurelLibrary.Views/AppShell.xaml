@@ -22,6 +22,11 @@
         Route="librarySearchPage"/>
 
     <ShellContent
+        Title="Borrowed Books"
+        ContentTemplate="{DataTemplate local:BorrowedBooksPage}"
+        Route="borrowedBooksPage"/>
+
+    <ShellContent
         Title="Home"
         ContentTemplate="{DataTemplate local:MainPage}"
         Route="mainPage"/>

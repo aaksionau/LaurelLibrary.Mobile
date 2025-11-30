@@ -50,14 +50,22 @@ public static class MauiProgram
 			var httpClient = httpClientFactory.CreateClient("default");
 			return new AuthenticationService(httpClient, "https://mylibrarian.org");
 		});
+		builder.Services.AddSingleton<IReaderService>(sp => 
+		{
+			var httpClientFactory = sp.GetRequiredService<IHttpClientFactory>();
+			var httpClient = httpClientFactory.CreateClient("default");
+			return new ReaderService(httpClient, "https://mylibrarian.org");
+		});
 
 		// Register ViewModels
 		builder.Services.AddTransient<ReaderAuthenticationViewModel>();
 		builder.Services.AddTransient<LibrarySearchPageViewModel>();
+		builder.Services.AddTransient<BorrowedBooksViewModel>();
 
 		// Register Pages
 		builder.Services.AddTransient<ReaderAuthenticationPage>();
 		builder.Services.AddTransient<LibrarySearchPage>();
+		builder.Services.AddTransient<BorrowedBooksPage>();
 
 #if DEBUG
 		builder.Logging.AddDebug();

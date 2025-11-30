@@ -2,6 +2,7 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:viewmodels="clr-namespace:LaurelLibrary.Core.ViewModels;assembly=LaurelLibrary.Core"
+             xmlns:models="clr-namespace:LaurelLibrary.Core.Models;assembly=LaurelLibrary.Core"
              x:Class="LaurelLibrary.Views.LibrarySearchPage"
              Title="Select Library"
              x:Name="SearchPage"
@@ -10,8 +11,7 @@
     <StackLayout>
         <!-- Search Results -->
         <CollectionView ItemsSource="{Binding Libraries}"
-                        SelectionMode="Single"
-                        IsVisible="{Binding IsNotBusy}">
+                        SelectionMode="Single">
             <CollectionView.Header>
                 <!-- Header -->
                 <VerticalStackLayout Spacing="8">
@@ -45,7 +45,7 @@
                 </StackLayout>
             </CollectionView.EmptyView>
             <CollectionView.ItemTemplate>
-                <DataTemplate>
+                <DataTemplate x:DataType="models:LibraryDto">
                     <Border Stroke="{StaticResource Primary}"
                             StrokeThickness="1"
                             Padding="16"

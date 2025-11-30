@@ -91,8 +91,8 @@ public partial class ReaderAuthenticationViewModel : ObservableObject
 
             if (success)
             {
-                // Navigate to main page
-                await Shell.Current.GoToAsync("//mainPage");
+                // Navigate to borrowed books page
+                await Shell.Current.GoToAsync("//borrowedBooksPage");
             }
             else
             {
