@@ -26,6 +26,8 @@ public partial class BorrowedBooksViewModel : ObservableObject
     public bool HasError => !string.IsNullOrEmpty(ErrorMessage);
     public bool HasBorrowedBooks => BorrowedBooks.Count > 0;
 
+    public bool ShowNoBorrowedBooks => !IsBusy && BorrowedBooks.Count == 0;
+
     public BorrowedBooksViewModel(IReaderService readerService)
     {
         _readerService = readerService;

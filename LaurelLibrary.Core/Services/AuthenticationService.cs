@@ -40,6 +40,7 @@ public class AuthenticationService : IAuthenticationService
                 await SecureStorage.SetAsync("library_id", libraryId.ToString());
                 await SecureStorage.SetAsync("reader_id", response.Reader.ReaderId?.ToString() ?? string.Empty);
                 await SecureStorage.SetAsync("is_authenticated", "true");
+                await SecureStorage.SetAsync("user_role", "reader");
                 return true;
             }
 
@@ -62,6 +63,17 @@ public class AuthenticationService : IAuthenticationService
         return _authToken;
     }
 
+    public async Task<bool> IsAuthenticatedAsync()
+    {
+        var isAuthenticated = await SecureStorage.GetAsync("is_authenticated");
+        return isAuthenticated == "true";
+    }
+
+    public async Task<string?> GetUserRoleAsync()
+    {
+        return await SecureStorage.GetAsync("user_role");
+    }
+
     public async Task LogoutAsync()
     {
         _authToken = null;
@@ -70,6 +82,7 @@ public class AuthenticationService : IAuthenticationService
         SecureStorage.Remove("library_id");
         SecureStorage.Remove("reader_id");
         SecureStorage.Remove("is_authenticated");
+        SecureStorage.Remove("user_role");
         await Task.CompletedTask;
     }
 }

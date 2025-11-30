@@ -9,13 +9,13 @@
              x:DataType="viewmodels:BorrowedBooksViewModel">
 
 	<Grid RowDefinitions="*" ColumnDefinitions="*">
-		<!-- Loading State -->
+		<!-- State Container - Only one state visible at a time -->
 		<StackLayout Grid.Row="0" Grid.Column="0"
 					 Padding="20"
 					 VerticalOptions="Center"
 					 HorizontalOptions="Center"
-					 IsVisible="{Binding IsBusy}"
-					 Spacing="15">
+					 IsVisible="{Binding IsBusy}">
+			<!-- Loading State -->
 			<ActivityIndicator IsRunning="{Binding IsBusy}"
 							   IsVisible="{Binding IsBusy}"
 							   Scale="1.5"/>
@@ -30,8 +30,7 @@
 					 Padding="20"
 					 VerticalOptions="Center"
 					 HorizontalOptions="Center"
-					 IsVisible="{Binding HasError}"
-					 Spacing="12">
+					 IsVisible="{Binding HasError}">
 			<Label Text="⚠️ Unable to Load Books"
 				   FontSize="18"
 				   FontAttributes="Bold"
@@ -49,8 +48,7 @@
 					 Padding="20"
 					 VerticalOptions="Center"
 					 HorizontalOptions="Center"
-					 IsVisible="{Binding HasBorrowedBooks, Converter={StaticResource InvertedBoolConverter}}"
-					 Spacing="12">
+					 IsVisible="{Binding ShowNoBorrowedBooks, Converter={StaticResource InvertedBoolConverter}}">
 			<Label Text="📚 No Borrowed Books"
 				   FontSize="18"
 				   FontAttributes="Bold"
@@ -65,7 +63,8 @@
 
 		<!-- Content State -->
 		<RefreshView Grid.Row="0" Grid.Column="0"
-					 IsVisible="{Binding HasBorrowedBooks}">
+					 IsVisible="{Binding HasBorrowedBooks}"
+					 Command="{Binding RefreshCommand}">
 			<ScrollView>
 				<StackLayout Padding="15" Spacing="0">
 					<!-- Header with Reader Greeting -->
