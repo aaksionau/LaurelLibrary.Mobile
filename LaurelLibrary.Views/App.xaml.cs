@@ -36,8 +36,8 @@ public partial class App : Application
 
 					if (isAuthenticated && userRole == "reader")
 					{
-						// Redirect reader role users directly to BorrowedBooksPage
-						await Shell.Current.GoToAsync("//borrowedBooksPage");
+						// Redirect reader role users to reader tabs with borrowed books page
+						await Shell.Current.GoToAsync("//readerTabs/borrowedBooksPage");
 					}
 				}
 			}

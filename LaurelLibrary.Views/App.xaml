@@ -13,6 +13,8 @@
 
             <converters:InvertedBoolConverter x:Key="InvertedBoolConverter"/>
             <converters:IsNotNullConverter x:Key="IsNotNullConverter"/>
+            <converters:StatusColorConverter x:Key="StatusColorConverter"/>
+            <converters:StatusIconConverter x:Key="StatusIconConverter"/>
         </ResourceDictionary>
     </Application.Resources>
 </Application>

@@ -13,7 +13,20 @@ public partial class AppShell : Shell
 		}
 		else
 		{
-			Loaded += async (s, e) => await GoToAsync("//mainPage");
+			Loaded += async (s, e) =>
+			{
+				var userRole = Preferences.Get("UserRole", string.Empty);
+				
+				// Navigate based on user role
+				if (userRole == "Reader")
+				{
+					await GoToAsync("//readerTabs/borrowedBooksPage");
+				}
+				else
+				{
+					await GoToAsync("//mainPage");
+				}
+			};
 		}
 	}
 }

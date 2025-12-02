@@ -91,8 +91,11 @@ public partial class ReaderAuthenticationViewModel : ObservableObject
 
             if (success)
             {
-                // Navigate to borrowed books page
-                await Shell.Current.GoToAsync("//borrowedBooksPage");
+                // Set the user role to Reader
+                Preferences.Set("UserRole", "Reader");
+
+                // Navigate to reader tabs (borrowed books page)
+                await Shell.Current.GoToAsync("//readerTabs/borrowedBooksPage");
             }
             else
             {

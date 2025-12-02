@@ -22,9 +22,19 @@ public partial class BorrowedBooksViewModel : ObservableObject
     [ObservableProperty]
     private string readerName = string.Empty;
 
+    [ObservableProperty]
+    private string libraryName = string.Empty;
+
+    [ObservableProperty]
+    private int booksOverdue;
+
+    [ObservableProperty]
+    private int booksDueSoon;
+
     public bool IsNotBusy => !IsBusy;
     public bool HasError => !string.IsNullOrEmpty(ErrorMessage);
     public bool HasBorrowedBooks => BorrowedBooks.Count > 0;
+    public bool HasLibraryInfo => !string.IsNullOrEmpty(LibraryName);
 
     public bool ShowNoBorrowedBooks => !IsBusy && BorrowedBooks.Count == 0;
 
@@ -46,6 +56,12 @@ public partial class BorrowedBooksViewModel : ObservableObject
     partial void OnBorrowedBooksChanged(ObservableCollection<BorrowedBookDto> value)
     {
         OnPropertyChanged(nameof(HasBorrowedBooks));
+        UpdateBookStatistics();
+    }
+
+    partial void OnLibraryNameChanged(string value)
+    {
+        OnPropertyChanged(nameof(HasLibraryInfo));
     }
 
     [RelayCommand]
@@ -76,6 +92,7 @@ public partial class BorrowedBooksViewModel : ObservableObject
             if (readerInfo != null)
             {
                 ReaderName = readerInfo.Name ?? "Reader";
+                LibraryName = readerInfo.LibraryName ?? string.Empty;
                 BorrowedBooks = new ObservableCollection<BorrowedBookDto>(readerInfo.BorrowedBooks);
             }
             else
@@ -91,6 +108,12 @@ public partial class BorrowedBooksViewModel : ObservableObject
         {
             IsBusy = false;
         }
+    }
+
+    private void UpdateBookStatistics()
+    {
+        BooksOverdue = BorrowedBooks.Count(b => b.IsOverdue);
+        BooksDueSoon = BorrowedBooks.Count(b => b.IsDueSoon);
     }
 
     [RelayCommand]

@@ -3,9 +3,11 @@ namespace LaurelLibrary.Core.Models;
 public class BorrowedBookDto
 {
     public Guid BookId { get; set; }
+    public int BookInstanceId { get; set; }
     public string Title { get; set; } = string.Empty;
     public string? Author { get; set; }
     public string? Isbn { get; set; }
+    public string? BookUrl { get; set; }
     public DateTime? DueDate { get; set; }
     public DateTime? BorrowedDate { get; set; }
 

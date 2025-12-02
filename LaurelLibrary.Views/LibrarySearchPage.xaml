@@ -6,9 +6,10 @@
              x:Class="LaurelLibrary.Views.LibrarySearchPage"
              Title="Select Library"
              x:Name="SearchPage"
-             x:DataType="viewmodels:LibrarySearchPageViewModel">
+             x:DataType="viewmodels:LibrarySearchPageViewModel"
+             Shell.NavBarIsVisible="False">
 
-    <StackLayout>
+    <StackLayout Padding="30">
         <!-- Search Results -->
         <CollectionView ItemsSource="{Binding Libraries}"
                         SelectionMode="Single">

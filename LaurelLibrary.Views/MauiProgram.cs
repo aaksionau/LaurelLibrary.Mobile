@@ -2,11 +2,17 @@
 using UraniumUI;
 using LaurelLibrary.Core.Services;
 using LaurelLibrary.Core.ViewModels;
+using ZXing.Net.Maui;
+using ZXing.Net.Maui.Controls;
 
 namespace LaurelLibrary.Views;
 
 public static class MauiProgram
 {
+	// Configuration constants
+	private const string BlobStorageDomain = "https://mylibrarianprodza8twn.blob.core.windows.net";
+	private const string BaseApiUrl = "https://mylibrarian.org";
+
 	public static MauiApp CreateMauiApp()
 	{
 		var builder = MauiApp.CreateBuilder();
@@ -14,6 +20,7 @@ public static class MauiProgram
 			.UseMauiApp<App>()
 			.UseUraniumUI()
 			.UseUraniumUIMaterial()
+			.UseBarcodeReader()
 			.ConfigureFonts(fonts =>
 			{
 				fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
@@ -42,30 +49,32 @@ public static class MauiProgram
 		{
 			var httpClientFactory = sp.GetRequiredService<IHttpClientFactory>();
 			var httpClient = httpClientFactory.CreateClient("default");
-			return new LibraryService(httpClient, "https://mylibrarian.org");
+			return new LibraryService(httpClient, BaseApiUrl);
 		});
 		builder.Services.AddSingleton<IAuthenticationService>(sp => 
 		{
 			var httpClientFactory = sp.GetRequiredService<IHttpClientFactory>();
 			var httpClient = httpClientFactory.CreateClient("default");
-			return new AuthenticationService(httpClient, "https://mylibrarian.org");
+			return new AuthenticationService(httpClient, BaseApiUrl);
 		});
 		builder.Services.AddSingleton<IReaderService>(sp => 
 		{
 			var httpClientFactory = sp.GetRequiredService<IHttpClientFactory>();
 			var httpClient = httpClientFactory.CreateClient("default");
-			return new ReaderService(httpClient, "https://mylibrarian.org");
+			return new ReaderService(httpClient, BaseApiUrl, BlobStorageDomain);
 		});
 
 		// Register ViewModels
 		builder.Services.AddTransient<ReaderAuthenticationViewModel>();
 		builder.Services.AddTransient<LibrarySearchPageViewModel>();
 		builder.Services.AddTransient<BorrowedBooksViewModel>();
+		builder.Services.AddTransient<ReturnBooksViewModel>();
 
 		// Register Pages
 		builder.Services.AddTransient<ReaderAuthenticationPage>();
 		builder.Services.AddTransient<LibrarySearchPage>();
 		builder.Services.AddTransient<BorrowedBooksPage>();
+		builder.Services.AddTransient<ReturnBooksPage>();
 
 #if DEBUG
 		builder.Logging.AddDebug();

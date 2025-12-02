@@ -4,8 +4,10 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:LaurelLibrary.Views"
-    Title="LaurelLibrary.Views">
+    Title="LaurelLibrary.Views"
+    FlyoutBehavior="Disabled">
 
+    <!-- Authentication Pages - No tabs or flyout -->
     <ShellContent
         Title="Authentication"
         ContentTemplate="{DataTemplate local:AuthenticationPage}"
@@ -21,14 +23,29 @@
         ContentTemplate="{DataTemplate local:LibrarySearchPage}"
         Route="librarySearchPage"/>
 
-    <ShellContent
-        Title="Borrowed Books"
-        ContentTemplate="{DataTemplate local:BorrowedBooksPage}"
-        Route="borrowedBooksPage"/>
-
+    <!-- Home Page - No tabs or flyout -->
     <ShellContent
         Title="Home"
         ContentTemplate="{DataTemplate local:MainPage}"
         Route="mainPage"/>
+
+    <!-- Reader Pages - TabBar navigation -->
+    <TabBar x:Name="ReaderTabBar" Route="readerTabs">
+        <ShellContent
+            Title="Home"
+            ContentTemplate="{DataTemplate local:BorrowedBooksPage}"
+            Route="borrowedBooksPage"
+            Icon="home.svg"/>
+        <ShellContent
+            Title="Return"
+            ContentTemplate="{DataTemplate local:ReturnBooksPage}"
+            Route="returnBooksPage"
+            Icon="returnbook.svg"/>
+        <ShellContent
+            Title="Profile"
+            ContentTemplate="{DataTemplate local:ReaderProfilePage}"
+            Route="profilePage"
+            Icon="profile.svg"/>
+    </TabBar>
 
 </Shell>
